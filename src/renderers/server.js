@@ -15,7 +15,9 @@ export async function serverRenderer() {
   return Promise.resolve({
     initialData,
     initialMarkup: ReactDOMServer.renderToString(
-      <App initialData={initialData} />
+      <div>
+        <App initialData={initialData} />
+      </div>
     ),
     pageData,
   });

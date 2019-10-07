@@ -36,6 +36,16 @@ app.get('/', async (req, res) => {
   }
 });
 
+app.get('/api/items', async (req, res) => {
+  try {
+    console.log('#######');
+    console.log(req.query.q);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Server error');
+  }
+})
+
 app.listen(config.port, config.host, () => {
   fs.writeFileSync(
     path.resolve('.reactful.json'),

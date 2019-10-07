@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import SearcherBox from './searcher/searcher';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 
 export function App() {
   return (
     <div> 
-      <header className="nav-header">
-        <a className="nav-logo" href="//localhost:3000/"></a>
-        <SearcherBox/ >
-      </header>
+      <SearcherBox/ >
     </div>
   );
 }
