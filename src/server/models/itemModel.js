@@ -1,11 +1,11 @@
-
+const pack = require('../../../package.json');
 class Author {
   constructor() {};
 
   static getAuthor() {
     return {
-      name:  'Facundo',
-      lastname: 'Lavagnino'
+      name:  pack.author.name,
+      lastname: pack.author.lastname
     }
   }
 }
@@ -16,10 +16,9 @@ class Item {
 
   static getItem(item, shippingSoldInfo) {
     const description = {
-      free_shipping: item.shipping ? item.shipping.free_shipping : undefined,
       sold_quantity: item.sold_quantity ? item.sold_quantity : undefined
     }
-
+    //adding address to model because the view require it
     const itemModel = {
       id: item.id || '',
       title: item.title || '',
@@ -30,6 +29,8 @@ class Item {
       },
       picture: item.thumbnail || '', 
       condition: item.condition || '',
+      free_shipping: item.shipping ? item.shipping.free_shipping : undefined,
+      address: item.address.state_name || ''
     }
     
     return shippingSoldInfo ? Object.assign(itemModel, description) : itemModel;
@@ -52,6 +53,7 @@ module.exports = function ItemModel(data) {
   if (data.results) {
     return {
       author: Author.getAuthor(),
+      categories: [],
       items: Item.getItems(data.results)
     }
   }

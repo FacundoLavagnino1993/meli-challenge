@@ -2,10 +2,15 @@
   "name": "meli-searcher",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://github.com/FacundoLavagnino1993/meli-challenge",
+  "email": "facu9396@gmail.com",
+  "author": {
+    "name": "Facundo",
+    "lastname": "Lavagnino"
+  },
   "scripts": {
-    "svgr": "svgr -d src/Icons/ assets/",
     "eslint": "eslint \"src/**/*.js\"",
-    "start": "concurrently \"npm run svgr\" \"npm run dev-server\" \"npm run dev-bundle\"",
+    "start": "concurrently \"npm run dev-server\" \"npm run dev-bundle\"",
     "test": "jest",
     "dev-server": "cross-env NODE_PATH=./src nodemon --exec \"babel-node src/server/server.js\" --ignore .reactful.json --ignore public/",
     "dev-bundle": "webpack -wd",
@@ -45,13 +50,11 @@
     "express": "^4.17.1",
     "mini-css-extract-plugin": "^0.8.0",
     "morgan": "^1.9.1",
-    "node-sass": "^4.12.0",
     "pm2": "^3.5.1",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-router-dom": "^5.1.2",
     "regenerator-runtime": "^0.13.3",
-    "sass-loader": "^8.0.0",
     "serialize-javascript": "^2.1.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.0",
@@ -73,7 +76,9 @@
     "eslint-plugin-react-hooks": "^2.1.1",
     "file-loader": "^4.2.0",
     "jest": "^24.9.0",
+    "node-sass": "^4.12.0",
     "nodemon": "^1.19.3",
-    "reactful": "^2.0.6"
+    "reactful": "^2.0.6",
+    "sass-loader": "^8.0.0"
   }
 }
