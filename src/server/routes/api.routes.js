@@ -7,16 +7,22 @@ const ItemBuilder = require('../models/itemBuilder');
 router.get('/items', (req, res) => {
   productService.getProducts(req.query.q)
   .then((response) => {
-    res.json(ItemBuilder(response));
+    res.json(ItemBuilder({
+      data: response,
+      origin: 'getProductsService'
+    }));
   }).catch((error)=> {
     res.status(error);
   });
 })
 
-router.get(['/items/:id', 'items'], (req, res) => {
-  productService.getProductsDetail(req.query.q)
+router.get(['/items/:id'], (req, res) => {
+  productService.getProductDetail(req.params.id)
   .then((response) => {
-    res.json(response);
+    res.json(ItemBuilder({
+      data: response,
+      origin: 'getProductDetailService'
+    }));
   }).catch((error)=> {
     console.log(error);
     res.status(error);
