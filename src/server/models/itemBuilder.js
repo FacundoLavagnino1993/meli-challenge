@@ -1,4 +1,5 @@
 const pack = require('../../../package.json');
+
 class Author {
   constructor() {};
 
@@ -7,6 +8,14 @@ class Author {
       name:  pack.author.name,
       lastname: pack.author.lastname
     }
+  }
+}
+
+class Breadcrumb {
+  constructor(){}
+
+  static buildCategories(categories) {
+    return categories.map(categories => categories.name);
   }
 }
 
@@ -49,12 +58,12 @@ class Item {
   }
 }
 
-module.exports = function ItemModel(data) {
-  if (data.results) {
+module.exports = function ItemBuilder(data) {
+  if (data.items && data.category) {
     return {
       author: Author.getAuthor(),
-      categories: [],
-      items: Item.getItems(data.results)
+      categories: Breadcrumb.buildCategories(data.category),
+      items: Item.getItems(data.items)
     }
   }
 };

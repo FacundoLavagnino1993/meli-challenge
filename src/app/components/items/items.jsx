@@ -6,13 +6,13 @@ class Items extends Component {
     super(props);
     this.state = {
       itemsResult: [],
+      breadcrumb: [],
       retriveFail: false,
       errorAplication: false,
       noContent: false
     }
     this.builderQuery = this.builderQuery.bind(this);
     this.getProducts = this.getProducts.bind(this);
-    this.limit = 4;
   }
 
   componentDidMount() {
@@ -44,11 +44,13 @@ class Items extends Component {
       if (data.items.length === 0) {
         this.setState({
           itemsResult: [],
+          breadcrumb: [],
           noContent: true
         })
       } else {
         this.setState({
           itemsResult: data.items,
+          breadcrumb: data.categories,
           noContent: false
         });
       }
@@ -64,7 +66,9 @@ class Items extends Component {
   render() {
     return (
       <div className="section-main">
-        
+        <div className="breadcrumb-box">
+          { this.state.breadcrumb.map((category, index) => <div className="breadcrumb-container" key={index}><span className="breadcrumb-text">{`${category}`}</span><span className="breadcrumb-symbol">{">"}</span></div>)}
+        </div>
         <ul className="card-container item">
           { this.state.itemsResult.map((element, index) => <ItemListElement data={element} key={index}/>) }
         </ul>

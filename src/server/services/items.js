@@ -1,6 +1,5 @@
 const axios = require('axios');
-//const API = 'https://api.mercadolibre.com';
-const itemModel = require('../models/itemModel');
+const itemModel = require('../models/itemBuilder');
 const config = require('../config/config');
 const basePath = config.envConfig.api.basePath;
 
@@ -18,20 +17,18 @@ class ProductService {
           'Accept': 'application/json'
         }
       }).then((response) => {
-        //let categoryId = findMajorCategories(response.data.available_filters.find(element => element.id == "category"));
-        let allCategories = response.data.available_filters.find(element => element.id == "category");
-        //this.findMajorCategories(response.data.available_filters);
-
-        console.log('##########');
-        console.log(allCategories);
-        resolve(itemModel(response.data));
+        const categoryId = this.findIdMajorCategory(response.data);
+        console.log(categoryId);
+        return this.getBreadcrumb(categoryId, response.data.results)
+      }).then((response)=>{
+        resolve(response);
       }).catch((error) => {
         reject(error.response);
       })
     })
   };
 
-  /*getBreadcrumb(categoryId) {
+  getBreadcrumb(categoryId, items) {
     return new Promise((resolve, reject) => {
       axios({
         'method': 'GET',
@@ -41,8 +38,10 @@ class ProductService {
           'Accept': 'application/json'
         }
       }).then((response) => {
-        console.log(response);
-        //resolve(itemModel(response.data));
+        resolve({
+          category: response.data.path_from_root,
+          items: items
+        })
       }).catch((error) => {
         reject(error.response);
       })
@@ -81,19 +80,21 @@ class ProductService {
       })
     })
   }*/
-  findIdMajorCategory(allCategories) {
-    //find(element => element.id == "category")
-    let allResultsCategories = [];
-      /*allCategories.values.foreach(element => {
-        allResultsCategories.push(element.results)});*/
-    console.log('################');
-    console.log(allResultsCategories);
-    /*if (allCategories) {
-      allCategories.foreach((element, index) => {
-        
+  findIdMajorCategory(data) {
+    //searching category into all filters
+    let categoriesValues = [];
+    let allCategories = data.available_filters.find(element => element.id == "category");
+    //searching top category result
+    if (allCategories) {
+      allCategories.values.forEach((value) => {
+        categoriesValues.push(value.results);
       })
-    }*/
-    
+      let topResult = Math.max(...categoriesValues);
+      //searching id category using topCategory result
+      return allCategories.values.find(element => element.results === topResult).id;
+    } else {
+      return '';
+    }
   }
 }
 
