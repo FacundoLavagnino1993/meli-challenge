@@ -6,7 +6,6 @@ class ItemListElement extends Component {
   constructor(props) {
     super(props);
   }
-//<span className="price-decimal">{`${this.props.data.price.decimals}`}</span>
   formatCurrency(currency) {
     return Helpers.currencyParser(currency);
   };

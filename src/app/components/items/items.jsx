@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import ItemListElement from './itemListElement/itemListElement.jsx';
 import Breadcrumb from '../breadcrumb/breadcrumb.jsx';
+import NotFound from '../notFound/notFound.jsx';
 class Items extends Component {
   constructor(props) {
     super(props);
@@ -12,9 +13,6 @@ class Items extends Component {
       errorAplication: false,
       noContent: false
     }
-    //this.builderQuery = this.builderQuery.bind(this);
-    //this.getProducts = this.getProducts.bind(this);
-    
   }
 
   componentDidMount() {
@@ -71,9 +69,9 @@ class Items extends Component {
   render() {
     return (
       <div className="section-main">
-        {this.state.breadcrumb.length > 0 ? <Breadcrumb data={this.state.breadcrumb} /> : <div></div>}
+        {this.state.breadcrumb.length > 0 ? <Breadcrumb data={this.state.breadcrumb} /> : <div className="space-breadcrumb"></div>}
         <ul className="card-container item">
-          { this.state.itemsResult.map((element, index) => <ItemListElement data={element} key={index}/>) }
+          {!this.state.noContent ? this.state.itemsResult.map((element, index) => <ItemListElement data={element} key={index}/>) : <NotFound />}
         </ul>
       </div>
     );

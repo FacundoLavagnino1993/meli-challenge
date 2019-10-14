@@ -3,8 +3,6 @@ import React, {Component} from 'react';
 class Breadcrumb extends Component {
   constructor(props) {
     super(props);
-    console.log('###');
-    console.log(this.props);
     this.state = {
       breadcrumb: [],
       errorAplication: false

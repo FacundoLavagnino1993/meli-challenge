@@ -1,5 +1,15 @@
+@import '../styles/variables.scss';
 
 .app-content{
   background-color: $light_gray;
-  padding: 0 200px 50px;
+  padding: 0 $side-spaces 50px;
+  min-width: $md-breakpoint;
+  min-height: 720px;
+  @media (max-width:$md-breakpoint) {
+    padding: 0 7% 50px;
+  }
+
+  @media (max-width:$sm-breakpoint) {
+    padding: 0 15% 50px;
+  }
 }

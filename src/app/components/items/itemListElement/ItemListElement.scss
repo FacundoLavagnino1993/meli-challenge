@@ -1,6 +1,7 @@
 @import '../../../../styles/variables.scss';
 
 li.item-element {
+  list-style-type: none;
   border-bottom: 1px solid $light_gray;
   border-radius: 2px;
   padding: 16px;
@@ -24,6 +25,7 @@ li.item-element {
       width: 60%;
       font-size: 22px;
       margin-top: 16px;
+      padding-left: 24px;
     }
     .item-price-shipping-ctn {
       display: flex;
@@ -40,7 +42,7 @@ li.item-element {
       }
       .price-decimal {
         vertical-align: text-top;
-        line-height: 28px;
+        line-height: 40px;
         font-size: 18px;
       }
     }

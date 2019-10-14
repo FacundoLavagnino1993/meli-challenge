@@ -2,21 +2,22 @@
 
 header {
   height: 50px;
-  background-color: $main_color;
-  padding: $default_padding;
-  position: relative;
   width: 100%;
-  padding: 10px 0;
-  z-index: 9999;
   text-align: center;
   display: flex;
+  min-width: $md-breakpoint;
+  background-color: $main_color;
   .header-ctn{
     font-family: $font_default;
     color: $font_color;
-    margin: 0 200px;
+    margin: 0 $side-spaces;
     overflow: hidden;
     width: 100%;
     display: flex;
+    min-width: $md-breakpoint;
+    @media (max-width:$md-breakpoint) {
+      margin: 0 7%;
+    }
     .header-logo{
       margin-top: 8px;
     }
