@@ -48,7 +48,7 @@ class Item {
       case FROM_GET_PRODUCT_DETAIL_SERVICE:
           Object.assign(itemModel, {
             picture: item.pictures[0].url || '',
-            sold_quantity: item.sold_quantity ? item.sold_quantity : undefined
+            sold_quantity: item.sold_quantity
           })
         break
     };
@@ -78,7 +78,7 @@ module.exports = function ItemBuilder(args) {
     case FROM_GET_PRODUCT_DETAIL_SERVICE:
       Object.assign(builder, {
         item: Item.getItem(args.data.item, FROM_GET_PRODUCT_DETAIL_SERVICE),
-        description: args.data.description.plain_text,
+        description: args.data.description,
         categories: Breadcrumb.buildCategories(args.data.category),
       });
       break;

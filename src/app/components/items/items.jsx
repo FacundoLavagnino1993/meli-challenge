@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import ItemListElement from './itemListElement/itemListElement.jsx';
+import Breadcrumb from '../breadcrumb/breadcrumb.jsx';
 class Items extends Component {
   constructor(props) {
     super(props);
@@ -11,8 +12,9 @@ class Items extends Component {
       errorAplication: false,
       noContent: false
     }
-    this.builderQuery = this.builderQuery.bind(this);
-    this.getProducts = this.getProducts.bind(this);
+    //this.builderQuery = this.builderQuery.bind(this);
+    //this.getProducts = this.getProducts.bind(this);
+    
   }
 
   componentDidMount() {
@@ -53,6 +55,7 @@ class Items extends Component {
           breadcrumb: data.categories,
           noContent: false
         });
+
       }
     })
     .catch((err) => {
@@ -63,12 +66,12 @@ class Items extends Component {
     })
   };
 
+  
+
   render() {
     return (
       <div className="section-main">
-        <div className="breadcrumb-box">
-          { this.state.breadcrumb.map((category, index) => <div className="breadcrumb-container" key={index}><span className="breadcrumb-text">{`${category}`}</span><span className="breadcrumb-symbol">{">"}</span></div>)}
-        </div>
+        {this.state.breadcrumb.length > 0 ? <Breadcrumb data={this.state.breadcrumb} /> : <div></div>}
         <ul className="card-container item">
           { this.state.itemsResult.map((element, index) => <ItemListElement data={element} key={index}/>) }
         </ul>

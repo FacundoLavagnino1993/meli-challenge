@@ -4,18 +4,27 @@ export default class Helper extends Component {
   constructor(props) {
     super(props);
   }
-
+  //Parser int amount (*.***)
   static amountPriceParser(amount) {
-    const point = '.';
-    const decimal = ','
-    let splitStr = amount.toString().split('.');
-    let splitLeft = splitStr[0];
-    let splitRight = splitStr.length > 1 ? decimal + splitStr[1] : '';
+    //delete decimals
+    let amountWithoutDecimals = parseInt(amount);
+    let amountString = amountWithoutDecimals.toString();
     const regx = /(\d+)(\d{3})/;
-    while (regx.test(splitLeft)) {
-      splitLeft = splitLeft.replace(regx, `$1.$2`);
+    while (regx.test(amountString)) {
+      amountString = amountString.replace(regx, `$1.$2`);
     }
-    return `${splitLeft}${splitRight}`;
+    return amountString;
+  }
+  //Parser decimal amount (.**)
+  static decimalPriceParser(decimal) {
+    const doubleZero = "00";
+    let decimalParsed;
+    if (decimal == 0) {
+      decimalParsed = doubleZero;
+    } else {
+      decimalParsed = decimal.toString().slice(2,4);
+    }
+    return decimalParsed;
   }
 
   static currencyParser(currency) {

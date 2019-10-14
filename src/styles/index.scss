@@ -1,10 +1,12 @@
 @import './src/app/components/searcher/searcher.scss';
 @import './src/app/components/header/header.scss';
 @import './src/app/components/items/items.scss';
+@import './src/app/components/breadcrumb/breadcrumb.scss';
 //@import './src/app/components/items/itemListElement/ItemListElement.scss';
 //@import './src/app/components/items/itemDetail/itemDetail.scss';
 @import './src/app/App.scss';
 @import './normalize.scss';
+@import './variables.scss';
 *,
 *:before 
 *:after {
@@ -12,5 +14,5 @@
 }
 
 
-body {
+body .container-device{
 }

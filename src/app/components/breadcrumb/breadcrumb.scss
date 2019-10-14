@@ -1,0 +1,28 @@
+@import '../../../styles/variables.scss';
+
+.breadcrumb-box {
+  display: flex;
+  flex-direction: row;
+  margin: 16px 0;
+  font-family: $font_default;
+  color: #999;
+  font-size:14;
+  font-weight: 400;
+  .breadcrumb-container {
+    &:last-child {
+      span:last-child {
+        display:none;
+      }
+    }
+  }
+  .breadcrumb-text {
+    &:hover{
+      color:#333;
+    }
+    margin-right: 16px;
+    cursor: pointer;
+  }
+  .breadcrumb-symbol {
+    margin-right: 16px;
+  }
+}

@@ -4,6 +4,7 @@ li.item-element {
   border-bottom: 1px solid $light_gray;
   border-radius: 2px;
   padding: 16px;
+  overflow: hidden;
   a {    
     display: flex;
     flex-direction: row;
@@ -14,6 +15,8 @@ li.item-element {
     font-weight: 400;
     .item-element-image {
       width: 20%;
+      min-width: 90px;
+      overflow: hidden;
     }
     .item-element-info-ctn {
       display: flex;
@@ -28,6 +31,18 @@ li.item-element {
     }
     .item-element-price {
       width: auto;
+      font-size: 32px;
+      .price-currency {
+        margin-right: 6px;
+      }
+      .price-amount {
+        margin-right: 4px;
+      }
+      .price-decimal {
+        vertical-align: text-top;
+        line-height: 28px;
+        font-size: 18px;
+      }
     }
     .item-shipping {
       padding-top: 5px;
