@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ItemListElement from './itemListElement/itemListElement.jsx';
+import ItemListElement from './itemListElement/ItemListElement.jsx';
 import Breadcrumb from '../breadcrumb/breadcrumb.jsx';
 import NotFound from '../errors/notFound.jsx';
 import AppError from '../errors/appError.jsx';

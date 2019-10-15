@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Breadcrumb from '../../breadcrumb/breadcrumb.jsx';
 import Helpers from '../../../helpers/amountParser.jsx';
 import NotFound from '../../errors/notFound.jsx';
+import AppError from '../../errors/appError.jsx';
+import ItemDetailComponent from './itemDetailContent/itemDetailContent.jsx';
 class ItemDetail extends Component {
   constructor(props) {
     super(props);
@@ -20,8 +22,7 @@ class ItemDetail extends Component {
         description: ''
       },
       breadcrumb: [],
-      description: '',
-      retriveFail: false,
+      notFound: false,
       errorAplication: false,
       loading: false
     };
@@ -42,7 +43,12 @@ class ItemDetail extends Component {
   }
 
   handleErrors(response) {
-    if (!response.ok) {
+    if (!response.ok && response.status == 404) {
+      this.setState({
+        loading: false,
+        errorAplication: false,
+        notFound: true
+      })
       throw Error();
     }
     return response.json();
@@ -54,9 +60,8 @@ class ItemDetail extends Component {
     .then(data => {
       this.setState({
         breadcrumb: data.categories,
-        retriveFail: false,
+        notFound: false,
         errorAplication: false,
-        loading: false,
         itemResult: {
           picture: data.item.picture,
           condition: data.item.condition ? 'Nuevo' : 'Usado',
@@ -68,59 +73,51 @@ class ItemDetail extends Component {
             currency: Helpers.currencyParser(data.item.price.currency) 
           },
           description: data.item.description
-        }
+        },
+        loading: false
       })
     }).catch(() => {
-      this.setState({
-        loading: false,
-        retriveFail: true
-      })
+      if (!this.state.notFound) {
+        this.setState({
+          loading: false,
+          notFound: false,
+          errorAplication: true
+        })
+      } 
     })
   };
 
+  renderHandler() {
+    let render = '';
+    switch(true) {
+      case  this.state.loading:
+              render = (<div></div>)
+                break;
+      case  !this.state.loading,
+            this.state.errorAplication:
+              render = (<AppError />);
+                break;
+      case  !this.state.loading,
+            this.state.notFound:
+              render = (<NotFound />);
+                break;
+      case  !this.state.loading,
+            !this.state.errorAplication,
+            !this.state.notFound:
+              render = <ItemDetailComponent itemResult={this.state.itemResult} />
+                break;    
+    }
+    return render;
+  } 
+
   render() {
     return (
-    <div>
-      { this.state.loading ? <div className="section-main"></div> : 
       <div className="section-main">
-      {this.state.breadcrumb.length > 0 && !this.state.retriveFail ? <Breadcrumb data={this.state.breadcrumb} /> : <div className="space-breadcrumb"></div>}
-      <div className="card-container">
-        {!this.state.retriveFail ? 
-          <div className="item-box">
-            <div className="item-detail-container">
-              <div className="item-picture">
-                <img src={this.state.itemResult.picture}></img>
-              </div>
-              <div className="item-info">
-                <div className="item-seller-info">
-                  <span>{`${this.state.itemResult.condition} - ${this.state.itemResult.sold_quantity} vendidos`}</span>
-                </div>
-                <div className="item-title">
-                  <span>{this.state.itemResult.title}</span>
-                </div>
-                <div className="item-price">
-                  <span className="price-currency">{this.state.itemResult.price.currency}</span>
-                  <span className="price-amount">{this.state.itemResult.price.amount}</span>
-                  <span className="price-decimal">{this.state.itemResult.price.decimals}</span>
-                </div>
-                <div className="item-buy-btn">
-                  <button>Comprar</button>
-                </div>
-              </div>
-            </div>
-            <div className="item-description-container">
-              <div className="description-title">
-                <h2>Descripción del producto</h2>
-              </div>
-              <div className="description-content">
-                {this.state.itemResult.description}
-              </div>
-            </div>
-          </div>
-          : <NotFound />} 
+        {this.state.breadcrumb.length > 0 ? <Breadcrumb data={this.state.breadcrumb} /> : <div className="space-breadcrumb"></div>}
+        <div className="card-container">
+          {this.renderHandler()}
         </div>
-      </div>}
-    </div>
+      </div>
     );
   }
 }
