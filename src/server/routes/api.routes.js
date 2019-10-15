@@ -12,7 +12,8 @@ router.get('/items', (req, res) => {
       origin: 'getProductsService'
     }));
   }).catch((error)=> {
-    res.status(error);
+    console.log('###########');
+    res.status(error.status).send(error.data);
   });
 })
 
@@ -24,8 +25,7 @@ router.get(['/items/:id'], (req, res) => {
       origin: 'getProductDetailService'
     }));
   }).catch((error)=> {
-    console.log(error);
-    res.status(error);
+    res.status(error.status).send(error.data);
   });
 })
 

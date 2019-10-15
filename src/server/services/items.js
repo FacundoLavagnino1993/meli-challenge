@@ -27,7 +27,6 @@ class ProductService {
           category: breadcrumb
         })
       }).catch((error) => {
-        console.log(error);
         reject(error.response);
       })
     })
@@ -46,7 +45,10 @@ class ProductService {
         }).then((response) => {
           resolve(response.data.path_from_root)
         }).catch((error) => {
-          reject(error.response);
+          //Log error and conitnue
+          console.log(error.response.data);
+          //Return a no content response to continue flow
+          resolve([])
         })
       })
     } else {
@@ -82,8 +84,8 @@ class ProductService {
           category: breadcrumb
         })
       }).catch((error) => {
-        console.log(error);
-        reject(error);
+        console.log(error.response);
+        reject(error.response);
       })
     })
   };
@@ -100,7 +102,7 @@ class ProductService {
       }).then((response) => {
         resolve(response.data)
       }).catch((error) => {
-        console.log(error);
+        console.log(error.response);
         reject(error.response);
       })
     })

@@ -1,0 +1,16 @@
+.server-error-container{
+  margin: 32px 0;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  .server-error-icon {
+    width: 90px;
+    margin-top: 16px;
+    margin-right: 32px;
+  }
+  .server-error-title {
+    font-size: 26px;
+    font-weight: 500;
+  }
+  
+}
