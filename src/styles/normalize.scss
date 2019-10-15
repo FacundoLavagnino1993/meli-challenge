@@ -19,3 +19,14 @@ time, mark, audio, video {
 	vertical-align: baseline;
 	
 }
+li:focus::-moz-focus-inner {
+	outline: none;
+	text-decoration: none;
+	border: none;
+}
+a:focus { 
+	outline: none; 
+}
+button:focus::-moz-focus-inner {
+  outline: none;
+}
