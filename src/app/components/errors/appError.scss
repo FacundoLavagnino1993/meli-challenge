@@ -1,14 +1,14 @@
-.server-error-container{
+.app-error-container{
   margin: 32px 0;
   justify-content: center;
   display: flex;
   flex-direction: row;
-  .server-error-icon {
+  .app-error-icon {
     width: 90px;
     margin-top: 16px;
     margin-right: 32px;
   }
-  .server-error-title {
+  .app-error-title {
     font-size: 26px;
     font-weight: 500;
   }

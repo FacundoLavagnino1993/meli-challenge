@@ -28,10 +28,10 @@ class ItemDetail extends Component {
   }
 
   componentDidMount() {
+    this.setState({
+      loading: true
+    });
     if(this.props.match && this.props.match.params) {
-      this.setState({
-        loading: true
-      });
       const id = this.props.match.params.id;
       this.getProdocutDetail(id);
     } else {
@@ -54,9 +54,9 @@ class ItemDetail extends Component {
     .then(data => {
       this.setState({
         breadcrumb: data.categories,
-        description: data.description,
         retriveFail: false,
         errorAplication: false,
+        loading: false,
         itemResult: {
           picture: data.item.picture,
           condition: data.item.condition ? 'Nuevo' : 'Usado',
@@ -68,8 +68,7 @@ class ItemDetail extends Component {
             currency: Helpers.currencyParser(data.item.price.currency) 
           },
           description: data.item.description
-        },
-        loading: false
+        }
       })
     }).catch(() => {
       this.setState({

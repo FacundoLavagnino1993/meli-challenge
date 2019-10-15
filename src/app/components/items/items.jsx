@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import ItemListElement from './itemListElement/itemListElement.jsx';
 import Breadcrumb from '../breadcrumb/breadcrumb.jsx';
 import NotFound from '../errors/notFound.jsx';
+import AppError from '../errors/appError.jsx';
 class Items extends Component {
   constructor(props) {
     super(props);
@@ -11,17 +11,22 @@ class Items extends Component {
       breadcrumb: [],
       retriveFail: false,
       errorAplication: false,
-      noContent: false
+      noContent: false,
+      loading: false
     }
   }
 
   componentDidMount() {
+    this.setState({
+      loading: true
+    });
     if (this.props.location && this.props.location.search) {
       const unparsedQuery = this.props.location.search;
       this.builderQuery(unparsedQuery);
     } else {
       this.setState({
-        errorAplication: true
+        errorAplication: true,
+        loading: false
       })
     }
   }
@@ -39,7 +44,6 @@ class Items extends Component {
 
   handleErrors(response) {
     if (!response.ok) {
-      console.log(response);
       throw Error(response.statusText);
     }
     return response.json();
@@ -53,37 +57,60 @@ class Items extends Component {
         this.setState({
           itemsResult: [],
           breadcrumb: [],
-          noContent: true
+          noContent: true,
+          errorAplication: false,
+          retriveFail: false,
+          loading: false
         })
       } else {
         this.setState({
           itemsResult: data.items,
           breadcrumb: data.categories,
-          noContent: false
+          noContent: false,
+          errorAplication: false,
+          retriveFail: false,
+          loading: false
         });
       }
     })
     .catch((err) => {
       console.log(err);
       this.setState({
-        retriveFail: true
+        retriveFail: true,
+        loading: false
       })
     })
   };
-//{!this.state.noContent ? this.state.itemsResult.map((element, index) => <ItemListElement data={element} key={index}/>) : <NotFound />}
   renderHandler() {
-    if (this.state.noContent && !this.state.retriveFail) {
-      return (<NotFound />);
-    } else if (!this.state.noContent) {
-      return (this.state.itemsResult.map((element, index) => <ItemListElement data={element} key={index}/>));
-    } 
+    let render = '';
+    switch(true) {
+      case  this.state.loading:
+              render = (<div></div>)
+                break;
+      case  !this.state.loading,
+            this.state.errorAplication, 
+            this.state.retriveFail:
+              render = (<AppError />);
+                break;
+      case  !this.state.loading,
+            this.state.noContent:
+              render = (<NotFound />);
+                break;
+      case  !this.state.loading,
+            !this.state.errorAplication,
+            !this.state.retriveFail,
+            !this.state.noContent:
+              render = (this.state.itemsResult.map((element, index) => <ItemListElement data={element} key={index}/>));
+                break;    
+    }
+    return render;
   } 
 
   render() {
     return (
       <div className="section-main">
         {this.state.breadcrumb.length > 0 ? <Breadcrumb data={this.state.breadcrumb} /> : <div className="space-breadcrumb"></div>}
-        <ul className="card-container item">
+        <ul className="card-container">
           {this.renderHandler()}
         </ul>
       </div>
